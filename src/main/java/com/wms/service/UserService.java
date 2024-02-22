@@ -41,4 +41,14 @@ public interface UserService {
     * 分页模糊查询用户
     * */
     PageBean listpage(Integer page, Integer pageSize, String name, Integer sex,Integer age);
+
+    /*
+    * 根据id查询用户
+    * */
+    User findById(Integer id);
+
+    /*
+    * 根据number查询用户
+    * */
+    User findByN(String number);
 }

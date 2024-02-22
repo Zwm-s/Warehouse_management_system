@@ -55,4 +55,14 @@ public class UserServiceImpl implements UserService {
         Page<User> p = (Page<User>) userList;
         return new PageBean(p.getTotal(),p.getResult());
     }
+
+    @Override
+    public User findById(Integer id) {
+       return userMapper.findBydId(id);
+    }
+
+    @Override
+    public User findByN(String number) {
+        return userMapper.findBydN(number);
+    }
 }
