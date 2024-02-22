@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -26,6 +27,22 @@ public class UserController {
         log.info("查询所有user");
         List<User> userList = userService.selectAll();
         return Result.success(userList);
+    }
+
+    @GetMapping("/findById")
+    public Result findById(Integer id){
+        log.info("根据id查询用户");
+        User user = userService.findById(id);
+        Optional<User> optionalUser = Optional.ofNullable(user);
+        return optionalUser.isPresent()?Result.error("账号已存在"):Result.success();
+    }
+
+    @GetMapping("/findByN")
+    public Result findByN(String number){
+        log.info("根据账户查询用户");
+        User user = userService.findByN(number);
+        Optional<User> optionalUser = Optional.ofNullable(user);
+        return optionalUser.isPresent()?Result.error("账号已存在"):Result.success();
     }
 
     @PostMapping("/listn")
@@ -59,8 +76,8 @@ public class UserController {
         return Result.success();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public Result delete(@PathVariable Integer id){
+    @DeleteMapping("/delete")
+    public Result delete(Integer id){
         log.info("删除user id:{}",id);
         userService.delete(id);
         return Result.success();

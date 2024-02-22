@@ -24,4 +24,10 @@ public interface UserMapper {
     void delete(Integer id);
 
     List<User> selectSome(User user);
+
+    @Select("select *from user where id=#{id}")
+    User findBydId(Integer id);
+
+    @Select("select *from user where number=#{number}")
+    User findBydN(String number);
 }
