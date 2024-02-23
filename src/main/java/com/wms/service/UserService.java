@@ -51,4 +51,9 @@ public interface UserService {
     * 根据number查询用户
     * */
     User findByN(String number);
+
+    /*
+    * 根据名字查找用户
+    * */
+    User findByName(String name);
 }

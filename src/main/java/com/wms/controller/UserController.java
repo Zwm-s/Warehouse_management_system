@@ -45,6 +45,13 @@ public class UserController {
         return optionalUser.isPresent()?Result.error("账号已存在"):Result.success();
     }
 
+    @GetMapping("/findByName")
+    public Result findByName(String name){
+        log.info("根据账户查询用户");
+        User user = userService.findByName(name);
+        return Result.success(user);
+    }
+
     @PostMapping("/listn")
     public Result Listn(@RequestBody User user){
         log.info("模糊查询user:{}",user);

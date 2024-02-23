@@ -13,12 +13,12 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 
 @Slf4j
-//@WebFilter(urlPatterns = "/*")//拦截路径
+@WebFilter(urlPatterns = "/*")//拦截路径
 public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        log.info("拦截到一次请求，拦截之前的操作");
+        log.info("拦截到一次请求");
         //转换类型获取请求信息
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse =(HttpServletResponse) servletResponse;
@@ -29,9 +29,18 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+        //放行预检    请求
+        if(httpRequest.getMethod().equals("OPTIONS")){
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         //获取jwt
-        String jwt = httpRequest.getHeader("token");
-        if(!StringUtils.hasLength(jwt)){
+        String jwt = httpRequest.getHeader("Token");
+        System.out.println("jwt:"+jwt);
+        System.out.println("url:"+httpRequest.getRequestURI());
+        System.out.println("method:"+httpRequest.getMethod());
+        //jwt不能为空
+        if(!StringUtils.hasLength(jwt)|jwt==null){
             Result result = Result.error("login error");
 
             String strResult = JSONObject.toJSONString(result);

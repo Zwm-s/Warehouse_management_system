@@ -33,7 +33,10 @@ public class LoginController {
             claims.put("name", e.getName());
             String jwt = JwtUtil.generateJwt(claims);
 
-            return Result.success(jwt);
+            HashMap<String,String> map =new HashMap<>();
+            map.put("token",jwt);
+            map.put("name",e.getName());
+            return Result.success(map);
         }
         return Result.error("login error");
     }

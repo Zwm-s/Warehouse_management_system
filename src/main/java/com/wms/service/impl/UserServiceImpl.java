@@ -65,4 +65,9 @@ public class UserServiceImpl implements UserService {
     public User findByN(String number) {
         return userMapper.findBydN(number);
     }
+
+    @Override
+    public User findByName(String name) {
+        return userMapper.findBydName(name);
+    }
 }

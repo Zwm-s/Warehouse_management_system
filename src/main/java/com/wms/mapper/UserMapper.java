@@ -30,4 +30,7 @@ public interface UserMapper {
 
     @Select("select *from user where number=#{number}")
     User findBydN(String number);
+
+    @Select("select *from user where name=#{name}")
+    User findBydName(String name);
 }
