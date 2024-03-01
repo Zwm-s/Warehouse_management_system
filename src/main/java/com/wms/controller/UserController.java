@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -38,9 +39,9 @@ public class UserController {
     }
 
     @GetMapping("/findByN")
-    public Result findByN(String number){
+    public Result findByNum(String number){
         log.info("根据账户查询用户");
-        User user = userService.findByN(number);
+        User user = userService.findByNum(number);
         Optional<User> optionalUser = Optional.ofNullable(user);
         return optionalUser.isPresent()?Result.error("账号已存在"):Result.success();
     }
@@ -89,6 +90,7 @@ public class UserController {
         userService.delete(id);
         return Result.success();
     }
+
 
 
 }

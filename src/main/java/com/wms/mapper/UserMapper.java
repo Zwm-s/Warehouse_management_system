@@ -29,7 +29,7 @@ public interface UserMapper {
     User findBydId(Integer id);
 
     @Select("select *from user where number=#{number}")
-    User findBydN(String number);
+    User findBydNum(String number);
 
     @Select("select *from user where name=#{name}")
     User findBydName(String name);

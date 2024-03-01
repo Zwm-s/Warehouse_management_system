@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mapper.ItemMapper">
+    <update id="mod">
+        update item
+        <set>
+            <if test="image!=null and image!=''">
+                image=#{image},
+            </if>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="instruction!=null and instruction!=''">
+                instruction=#{instruction},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from item
+        where id=#{id}
+    </delete>
+    <select id="selectSome" resultType="com.wms.entity.Item">
+        select *from item
+        <where>
+            <if test="name!=null and name!=''">
+                name like concat('%',#{name},'%') and
+            </if>
+            wh_id=#{whId}
+        </where>
+        order by id
+    </select>
+</mapper>

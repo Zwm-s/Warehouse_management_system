@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public List<User> selectAll() {
         return userMapper.selectAll();
@@ -62,8 +63,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByN(String number) {
-        return userMapper.findBydN(number);
+    public User findByNum(String number) {
+        return userMapper.findBydNum(number);
     }
 
     @Override

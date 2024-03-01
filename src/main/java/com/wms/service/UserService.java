@@ -50,7 +50,7 @@ public interface UserService {
     /*
     * 根据number查询用户
     * */
-    User findByN(String number);
+    User findByNum(String number);
 
     /*
     * 根据名字查找用户
