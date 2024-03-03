@@ -41,10 +41,10 @@ public class ItemController {
 
     @GetMapping("/listp")
     public Result listpage(@RequestParam(defaultValue = "1") Integer page,
-                           @RequestParam(defaultValue = "20") Integer pageSize,
+                           @RequestParam(defaultValue = "40") Integer pageSize,
                            String name,Integer whId) {
         //@RequestParam设置默认参数值
-        log.info("进行分页查询，参数：{} {} {} {}", page, pageSize, name,whId);
+        log.info("进行物品分页查询，参数：{} {} {} {}", page, pageSize, name,whId);
         PageBean pageBean = itemService.listpage(page,pageSize,name,whId);
         return Result.success(pageBean);
     }

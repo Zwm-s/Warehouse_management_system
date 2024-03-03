@@ -41,6 +41,7 @@ public class LoginServiceImpl implements LoginService {
         HashMap<String,String> map =new HashMap<>();
         map.put("token",jwt);
         map.put("name",loginuser.getName());
+        map.put("id",loginuser.getId().toString());
 
         return Result.success(map);
     }

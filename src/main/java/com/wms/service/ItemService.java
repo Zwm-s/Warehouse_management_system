@@ -15,6 +15,11 @@ public interface ItemService {
     void delete(Integer id);
 
     /*
+    * 根据whId删除物品
+    * */
+    void deleteByWhId(Integer whId);
+
+    /*
     * 修改物品
     * */
     void mod(Item item);

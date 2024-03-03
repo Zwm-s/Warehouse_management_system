@@ -43,4 +43,9 @@ public class WareHouseServiceImpl implements WareHouseService {
         Page<WareHouse> p = (Page<WareHouse>) wareHouselist;
         return new PageBean(p.getTotal(),p.getResult());
     }
+
+    @Override
+    public WareHouse getById(Integer whId) {
+        return wareHouseMapper.selectById(whId);
+    }
 }

@@ -4,6 +4,7 @@ import com.wms.entity.Item;
 import com.wms.entity.PageBean;
 import com.wms.entity.Result;
 import com.wms.entity.WareHouse;
+import com.wms.service.ItemService;
 import com.wms.service.WareHouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class WareHouseController {
     @Autowired
     WareHouseService wareHouseService;
 
+    @Autowired
+    ItemService itemService;
+
     @PostMapping("/add")
     public Result add(@RequestBody WareHouse wareHouse){
         log.info("新增warehouse{}",wareHouse);
@@ -28,6 +32,7 @@ public class WareHouseController {
     @DeleteMapping("/delete")
     public Result delete(Integer id){
         log.info("删除WareHouse:{}",id);
+        itemService.deleteByWhId(id);
         wareHouseService.delete(id);
         return Result.success();
     }
@@ -44,9 +49,15 @@ public class WareHouseController {
                            @RequestParam(defaultValue = "20") Integer pageSize,
                            String name,Integer userId) {
         //@RequestParam设置默认参数值
-        log.info("进行分页查询，参数：{} {} {} {}", page, pageSize, name,userId);
+        log.info("进行仓库分页查询，参数：{} {} {} {}", page, pageSize, name,userId);
         PageBean pageBean = wareHouseService.listpage(page,pageSize,name,userId);
         return Result.success(pageBean);
     }
 
+    @GetMapping("/getById")
+    public Result getBydId(Integer whId){
+        log.info("根据whId获取wareHouse:{}",whId);
+        WareHouse wareHouse =wareHouseService.getById(whId);
+        return Result.success(wareHouse);
+    }
 }

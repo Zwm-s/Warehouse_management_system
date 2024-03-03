@@ -29,6 +29,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void deleteByWhId(Integer whId) {
+        itemMapper.deleteByWhId(whId);
+    }
+
+    @Override
     public void mod(Item item) {
         itemMapper.mod(item);
     }

@@ -22,6 +22,12 @@
         delete from item
         where id=#{id}
     </delete>
+    <delete id="deleteByWhId">
+        delete from item
+        <where>
+            wh_id=#{whId}
+        </where>
+    </delete>
     <select id="selectSome" resultType="com.wms.entity.Item">
         select *from item
         <where>

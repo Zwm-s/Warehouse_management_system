@@ -5,7 +5,7 @@
 <mapper namespace="com.wms.mapper.WareHouseMapper">
 
     <insert id="add">
-        insert into warehouse(user_id, name) values (#{userId},#{name});
+        insert into warehouse(user_id, name,description) values (#{userId},#{name},#{description});
     </insert>
     <update id="mod">
         update warehouse
@@ -15,6 +15,9 @@
             </if>
             <if test="name!=null and name!=''">
                 name=#{name},
+            </if>
+            <if test="description!=null and description!=''">
+                description=#{description},
             </if>
         </set>
         where id = #{id}
@@ -32,5 +35,11 @@
             user_id=#{userId}
         </where>
         order by id
+    </select>
+    <select id="selectById" resultType="com.wms.entity.WareHouse">
+        select *from warehouse
+        <where>
+            id=#{whId}
+        </where>
     </select>
 </mapper>

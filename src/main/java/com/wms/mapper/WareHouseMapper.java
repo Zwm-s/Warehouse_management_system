@@ -16,4 +16,6 @@ public interface WareHouseMapper {
     void mod(WareHouse wareHouse);
 
     List<WareHouse> selectSome(WareHouse wareHouse);
+
+    WareHouse selectById(Integer whId);
 }

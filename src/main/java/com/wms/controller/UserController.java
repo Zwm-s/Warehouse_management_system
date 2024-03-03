@@ -38,7 +38,7 @@ public class UserController {
         return optionalUser.isPresent()?Result.error("账号已存在"):Result.success();
     }
 
-    @GetMapping("/findByN")
+    @GetMapping("/findByNum")
     public Result findByNum(String number){
         log.info("根据账户查询用户");
         User user = userService.findByNum(number);
@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping("/findByName")
     public Result findByName(String name){
-        log.info("根据账户查询用户");
+        log.info("根据名称查询用户");
         User user = userService.findByName(name);
         return Result.success(user);
     }
@@ -65,7 +65,7 @@ public class UserController {
                        @RequestParam(defaultValue = "20") Integer pageSize,
                        String name, Integer sex,Integer age) {
         //@RequestParam设置默认参数值
-        log.info("进行分页查询，参数：{} {} {} {} {}", page, pageSize, name, sex,age);
+        log.info("进行用户分页查询，参数：{} {} {} {} {}", page, pageSize, name, sex,age);
         PageBean pageBean = userService.listpage(page,pageSize,name,sex,age);
         return Result.success(pageBean);
     }

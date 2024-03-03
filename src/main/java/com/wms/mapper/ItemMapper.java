@@ -22,4 +22,6 @@ public interface ItemMapper {
     void mod(Item item);
 
     List<Item> selectSome(Item item);
+
+    void deleteByWhId(Integer whId);
 }
