@@ -3,12 +3,15 @@ package com.wms.filters;
 import com.alibaba.fastjson.JSONObject;
 import com.wms.entity.Result;
 import com.wms.entity.User;
+import com.wms.mapper.UserMapper;
 import com.wms.utils.JwtUtil;
+import com.wms.utils.StrRedisTemplateUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 /*
@@ -26,6 +30,12 @@ import java.util.Map;
 @Slf4j
 @Component
 public class JwtLoginFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private StrRedisTemplateUtil strRedisTemplateUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -42,7 +52,6 @@ public class JwtLoginFilter extends OncePerRequestFilter {
         System.out.println("url:" + request.getRequestURI());
         System.out.println("method:" + request.getMethod());
 
-
         Map<String, Object> claims;
         try {
             claims = JwtUtil.parseJWT(jwt);
@@ -56,11 +65,20 @@ public class JwtLoginFilter extends OncePerRequestFilter {
             throw new RuntimeException(e);
         }
 
-        User user = new User();
-        user.setNumber(claims.get("number").toString());
+        //从Redis查找
+        User user =  strRedisTemplateUtil.getUser((String) claims.get("number"));
+        if(Objects.isNull(user)){
+            Result result = Result.error("用户未登录");
+            //因为不是在controller之内，需要手动将返回信息封装到json格式之中
+            String strResult = JSONObject.toJSONString(result);
+            //将结果写入返回体之中
+            response.getWriter().write(strResult);
+            throw new RuntimeException("用户未登录");
+        }
+
 
         /*
-        * 将User的信息提交到上下文中以通过其它过滤器验证，虽然不知道什么原理
+        * 将User的信息提交到上下文中以通过其它过滤器验证
         * */
 
         UsernamePasswordAuthenticationToken authenticationToken =

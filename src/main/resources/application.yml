@@ -1,12 +1,27 @@
-#?????
+#数据库配置
 spring:
   datasource:
    driver-class-name: com.mysql.cj.jdbc.Driver
    url: jdbc:mysql://localhost:3306/wms
    username: root
    password: 123456
+   #Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0  #0号数据库
+      Lettuce:
+        pool:
+          max-active: 8 #最大连接
+          max-wait: 1ms #最大阻塞延迟
+          max-idle: 4 #最大空闲连接
+          min-idle: 0 #最小空闲连接
 
-#mybatis????
+
+
+
+#mybatis配置
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

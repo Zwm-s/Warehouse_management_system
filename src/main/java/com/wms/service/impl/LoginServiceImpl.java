@@ -1,14 +1,13 @@
 package com.wms.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wms.entity.Result;
 import com.wms.entity.User;
 import com.wms.mapper.UserMapper;
 import com.wms.service.LoginService;
 import com.wms.utils.JwtUtil;
+import com.wms.utils.StrRedisTemplateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,8 +19,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private StrRedisTemplateUtil strRedisTemplateUtil;
+
     @Override
-    public Result login(User user) {
+    public Result login(User user) throws JsonProcessingException {
 
         //验证
         User loginuser= userMapper.findBydNum(user.getNumber());
@@ -37,6 +40,9 @@ public class LoginServiceImpl implements LoginService {
 
         String jwt = JwtUtil.generateJwt(claims);
 
+        //存储到Redis内
+        strRedisTemplateUtil.saveUser(loginuser.getNumber(),loginuser,2);
+
         //封装jwt
         HashMap<String,String> map =new HashMap<>();
         map.put("token",jwt);
@@ -45,4 +51,13 @@ public class LoginServiceImpl implements LoginService {
 
         return Result.success(map);
     }
+
+    @Override
+    public void logout(Integer id) {
+        User user = userMapper.findBydId(id);
+        String user_number = user.getNumber();
+        strRedisTemplateUtil.deleteValue(user_number);
+    }
+
+
 }
