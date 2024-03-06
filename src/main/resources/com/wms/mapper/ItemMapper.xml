@@ -38,4 +38,8 @@
         </where>
         order by id
     </select>
+    <select id="selectById" resultType="com.wms.entity.Item">
+        select *from item
+        where id=#{id}
+    </select>
 </mapper>

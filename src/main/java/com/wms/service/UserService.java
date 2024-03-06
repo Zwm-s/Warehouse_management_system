@@ -56,4 +56,14 @@ public interface UserService {
     * 根据名字查找用户
     * */
     User findByName(String name);
+
+    /*
+    * 根据用户id找头像图片
+    * */
+    String findImageById(Integer id);
+
+    /*
+    * 根据id设置头像
+    * */
+    void saveImageById(Integer id,String image);
 }

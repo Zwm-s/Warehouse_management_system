@@ -5,7 +5,8 @@ spring:
    url: jdbc:mysql://localhost:3306/wms
    username: root
    password: 123456
-   #Redis配置
+
+ #Redis配置
   data:
     redis:
       host: localhost
@@ -17,8 +18,10 @@ spring:
           max-wait: 1ms #最大阻塞延迟
           max-idle: 4 #最大空闲连接
           min-idle: 0 #最小空闲连接
-
-
+#上传文件大小限制
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 
 #mybatis配置

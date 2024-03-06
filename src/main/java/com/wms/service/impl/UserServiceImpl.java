@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /*
 * UserService实现类
@@ -70,5 +71,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByName(String name) {
         return userMapper.findBydName(name);
+    }
+
+    @Override
+    public String findImageById(Integer id) {
+        return userMapper.findImage(id);
+    }
+
+    @Override
+    public void saveImageById(Integer id,String image) {
+        String str_image =userMapper.findImage(id);
+        if(Objects.isNull(str_image)){
+            userMapper.saveImage(id,image);
+        }else{
+            userMapper.updateImage(id,image);
+        }
+
     }
 }

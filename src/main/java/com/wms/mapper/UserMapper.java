@@ -33,4 +33,10 @@ public interface UserMapper {
 
     @Select("select *from user where name=#{name}")
     User findBydName(String name);
+
+    String findImage(Integer id);
+
+    void saveImage(Integer id,String image);
+
+    void updateImage(Integer id, String image);
 }

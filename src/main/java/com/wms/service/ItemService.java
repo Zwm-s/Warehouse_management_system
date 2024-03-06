@@ -28,4 +28,9 @@ public interface ItemService {
     * 分页查询
     * */
     PageBean listpage(Integer page, Integer pageSize, String name,Integer whId);
+
+    /*
+    * 存储itemImage
+    * */
+    void saveImage(String imageUrl,Integer id);
 }

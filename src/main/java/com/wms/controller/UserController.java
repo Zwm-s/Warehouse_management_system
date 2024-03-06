@@ -91,6 +91,18 @@ public class UserController {
         return Result.success();
     }
 
+    @GetMapping("/findImageById")
+    public Result findImageById(Integer id){
+        log.info("更具用户id寻找头像：{}",id);
+       String image= userService.findImageById(id);
+        return Result.success(image);
+    }
 
+    @GetMapping("/saveImage")
+    public Result saveImageById(Integer id,String image){
+        log.info("根据用户id寻找头像：{}{}",id,image);
+        userService.saveImageById(id,image);
+        return Result.success();
+    }
 
 }

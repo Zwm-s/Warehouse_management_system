@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wms.mapper.UserMapper">
+    <insert id="saveImage">
+        insert into user_image(id, image) VALUES(#{id},#{image});
+    </insert>
     <update id="mod"><!--id为方法名，resulttype为单条记录的封装类型-->
         update user
         <set>
@@ -30,6 +33,15 @@
         </set>
         where id = #{id}
     </update>
+    <update id="updateImage">
+        update user_image
+        <set>
+            <if test="image!=null">
+                image=#{image}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
     <delete id="delete">
         delete from user
         where id=#{id}
@@ -48,5 +60,9 @@
             </if>
         </where>
         order by id
+    </select>
+    <select id="findImage" resultType="java.lang.String">
+        select image from user_image
+        where id=#{id}
     </select>
 </mapper>

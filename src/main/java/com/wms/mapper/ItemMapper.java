@@ -24,4 +24,6 @@ public interface ItemMapper {
     List<Item> selectSome(Item item);
 
     void deleteByWhId(Integer whId);
+
+    Item selectById(Integer id);
 }
