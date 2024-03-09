@@ -23,6 +23,10 @@ spring:
     multipart:
       max-file-size: 10MB
 
+#配置资源路径
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${demo.web.upload-path}
 
 #mybatis配置
 mybatis:
@@ -33,3 +37,6 @@ mybatis:
 server:
   port: 8090
 
+demo:
+  web:
+    upload-path: D:/projecttest/wmsStorage/itemImage/

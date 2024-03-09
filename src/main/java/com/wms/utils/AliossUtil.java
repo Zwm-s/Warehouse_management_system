@@ -18,7 +18,7 @@ import java.util.UUID;
 * 上传云端存储工具
 * */
 @Slf4j
-@Component//既不属于controller也不属于service也不是数据访问，使用此注解加入IOC管理
+//@Component//既不属于controller也不属于service也不是数据访问，使用此注解加入IOC管理
 public class AliossUtil {
 
     private String endpoint = "https://oss-cn-beijing.aliyuncs.com";
