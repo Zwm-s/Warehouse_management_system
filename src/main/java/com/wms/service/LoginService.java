@@ -8,7 +8,18 @@ import java.net.http.HttpRequest;
 
 public interface LoginService {
 
-    Result login(User user) throws JsonProcessingException;
+    /*
+    * 登录
+    * */
+    Result login(User user);
 
+    /*
+    * 登出
+    * */
     void logout(Integer id);
+
+    /*
+    * 注册用户
+    * */
+    boolean register(User user);
 }

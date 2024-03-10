@@ -3,6 +3,7 @@ package com.wms.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wms.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 /*
 * 存储Redis工具类
 * */
+@Slf4j
 @Component
 public class StrRedisTemplateUtil {
     //导入StringRedisTemplate
@@ -36,10 +38,16 @@ public class StrRedisTemplateUtil {
 
     }
 
-    public void saveUser(String key, User user,Integer timeout) throws JsonProcessingException {
+    public void saveUser(String key, User user,Integer timeout)  {
 
-        String userJson = mapper.writeValueAsString(user);
-
+        //转换为json字符串
+        String userJson = null;
+        try {
+            userJson = mapper.writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        //存储到Redis中
         stringRedisTemplate.opsForValue().set(key, userJson);
         try {
             if(timeout>0){

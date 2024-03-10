@@ -24,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
     private StrRedisTemplateUtil strRedisTemplateUtil;
 
     @Override
-    public Result login(User user) throws JsonProcessingException {
+    public Result login(User user) {
 
         //验证
         User loginuser= userMapper.findBydNum(user.getNumber());
@@ -43,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
         //存储到Redis内
         strRedisTemplateUtil.saveUser(loginuser.getNumber(),loginuser,2);
 
-        //封装jwt
+        //封装返回结果
         HashMap<String,String> map =new HashMap<>();
         map.put("token",jwt);
         map.put("name",loginuser.getName());
@@ -57,6 +57,19 @@ public class LoginServiceImpl implements LoginService {
         User user = userMapper.findBydId(id);
         String user_number = user.getNumber();
         strRedisTemplateUtil.deleteValue(user_number);
+    }
+
+    @Override
+    public boolean register(User user) {
+        User user1= userMapper.findBydNum(user.getNumber());
+        if(user1==null){
+            userMapper.add(user);
+            User user2= userMapper.findBydNum(user.getNumber());
+            userMapper.saveImage(user2.getId(),"QCF");
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

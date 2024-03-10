@@ -23,6 +23,8 @@ public class LocalStorageUtil {
     @Value("${demo.web.upload-path}")
     private String uploadPath;
 
+    private final String storagePath ="itemImage/";
+
     public String upload(MultipartFile file, HttpServletRequest request){
         //处理文件参数为空
         if (file == null) {
@@ -33,14 +35,14 @@ public class LocalStorageUtil {
         // 例如：/2022/02/22/df9a66f1-760b-4f95-9faf-b5a216966718.png
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM/dd");
         String format = sdf.format(new Date());
-        File folder = new File(uploadPath + format);
+        File folder = new File(uploadPath+ storagePath +format);
         if (!folder.isDirectory()) {
             folder.mkdirs();
         }
 
         // 对上传的文件重命名, 避免文件重名
         String oldName = file.getOriginalFilename();
-        String newName = UUID.randomUUID().toString()
+        String newName = UUID.randomUUID()
                 + oldName.substring(oldName.lastIndexOf("."), oldName.length());
 
         try {
@@ -51,7 +53,7 @@ public class LocalStorageUtil {
             // 返回上传文件的访问路径
             // 例如：http://localhost:9999/2022/02/22/df9a66f1-760b-4f95-9faf-b5a216966718.png
             String filePath = request.getScheme() + "://" + request.getServerName()
-                    + ":" + request.getServerPort() + request.getContextPath() + "/" + format +"/"+ newName;
+                    + ":" + request.getServerPort() + request.getContextPath() + "/" + storagePath + format +"/"+ newName;
 
             return filePath;
         } catch (IOException e) {

@@ -93,7 +93,7 @@ public class UserController {
 
     @GetMapping("/findImageById")
     public Result findImageById(Integer id){
-        log.info("更具用户id寻找头像：{}",id);
+        log.info("根据用户id寻找头像：{}",id);
        String image= userService.findImageById(id);
         return Result.success(image);
     }

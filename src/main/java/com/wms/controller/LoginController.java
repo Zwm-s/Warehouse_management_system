@@ -25,11 +25,14 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
+    @Autowired
+    UserService userService;
+
     /*
      * 登录控制层
      * */
     @PostMapping("/login")
-    public Result login(@RequestBody User user) throws JsonProcessingException {
+    public Result login(@RequestBody User user) {
         log.info("用户登录：{}",user);
         return loginService.login(user);
     }
@@ -39,5 +42,16 @@ public class LoginController {
         log.info("用户退出:{}",id);
         loginService.logout(id);
         return Result.success();
+    }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody User user){
+
+        log.info("用户注册：{}",user);
+        if(loginService.register(user)){
+            return Result.success();
+        }else{
+            return Result.error("注册失败，用户已存在");
+        }
     }
 }

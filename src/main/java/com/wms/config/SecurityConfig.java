@@ -42,13 +42,18 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) -> {
                     auth.requestMatchers(HttpMethod.POST,"/login").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                            .requestMatchers(HttpMethod.POST,"/**").permitAll()
-                            .requestMatchers(HttpMethod.DELETE,"/**").permitAll()
-                            .requestMatchers(HttpMethod.GET,"/**").permitAll()
+                            .requestMatchers("/itemImage/**").permitAll()
+                            //.requestMatchers(HttpMethod.POST,"/**").permitAll()
+                            //.requestMatchers(HttpMethod.DELETE,"/**").permitAll()
+                            //.requestMatchers(HttpMethod.GET,"/**").permitAll()
+                            .requestMatchers("/users/add","/users/mod","/users/delete").hasAuthority("superManager")
+                            //hasRole要求有对应的角色才可以访问，但是它内部会把我们传入的参数拼接上 ROLE_ 后再去比较。
+                            //所以这种情况下要用用户对应的权限也要有 ROLE_ 这个前缀才可以。
                             .anyRequest()
                             .authenticated();
                 }
         );
+
 
         //禁用默认登录表单
         http.formLogin(AbstractHttpConfigurer::disable);

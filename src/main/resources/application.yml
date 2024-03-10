@@ -39,4 +39,4 @@ server:
 
 demo:
   web:
-    upload-path: D:/projecttest/wmsStorage/itemImage/
+    upload-path: D:/projecttest/wmsStorage/
