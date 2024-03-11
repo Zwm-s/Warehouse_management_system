@@ -9,6 +9,8 @@ set on **2024.2.21**
 + SSM
 + springweb
 + mybatis
++ Redis
++ SpringSecurity
 
 # 更新日志
 
